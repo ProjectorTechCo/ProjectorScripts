@@ -1,4 +1,4 @@
-from ExcelETL.GoogleModel import GoogleModel
+from excel_etl.models.model import  GoogleModel
 
 
 class GooglePlace(GoogleModel):

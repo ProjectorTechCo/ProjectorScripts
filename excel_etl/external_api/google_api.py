@@ -1,10 +1,11 @@
 import requests
-from urllib.parse import urlencode
 import os
+from urllib.parse import urlencode
 
-from ExcelETL.GooglePlace import GooglePlace
+from excel_etl.models.google_place import GooglePlace
 
-API_KEY = os.environ.get('GOOGLE_API_KEY')
+DEFAULT_API_KEY = "123"
+API_KEY = os.environ.get('GOOGLE_API_KEY') or DEFAULT_API_KEY
 MAPS_API = "https://maps.googleapis.com/maps/api/{api_type}/{api_function}/json?{params}&key=" + API_KEY
 
 
