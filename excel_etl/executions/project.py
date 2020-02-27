@@ -1,4 +1,4 @@
-from executions.execute import IExecute
+from excel_etl.executions import IExecute
 
 
 class Project(IExecute):

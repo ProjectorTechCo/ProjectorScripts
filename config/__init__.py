@@ -1,4 +1,4 @@
-from executions.project import Project
+from excel_etl.executions.project import Project
 
 EXCEL_SHEETS = ['projects', 'buildings', 'apps', 'users', 'entrepreneurs', 'contractors', '2d_imgs', '3d_obj',
                 'comp_videos']
