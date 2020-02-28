@@ -1,16 +1,20 @@
-from abc import ABC, abstractmethod
 import logging
 
 
-class IExecute(ABC):
-    def __init__(self, prefix, column_schema):
-        self.prefix = prefix
+class Execute(object):
+    def __init__(self, column_schema):
         self.column_schema = column_schema
 
-    @abstractmethod
     def process(self, df):
-        raise NotImplementedError()
+        self.validate(df)
+        return []
 
-    @staticmethod
-    def log_action(message):
-        logging.info(message)
+    def validate(self, df):
+        difference_columns = set(self.column_schema).symmetric_difference(set(df.columns.values))
+        if difference_columns:
+            raise NotValidDataframe(
+                "The schema is invalid, missing/redundant columns {columns}".format(columns=difference_columns))
+
+
+class NotValidDataframe(Exception):
+    pass
