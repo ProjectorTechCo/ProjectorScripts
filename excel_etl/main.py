@@ -22,9 +22,6 @@ def read_sheet(sheet_name, file_location=FILE_NAME):
         raise ExcelFileNotFound(file_location)
 
 
-def get_parameters():
-
-
 def main():
     for sheet_name, table_schema in TABLES_SCHEMA.items():
         df = read_sheet(sheet_name)
