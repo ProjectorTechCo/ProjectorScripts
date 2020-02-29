@@ -1,3 +1,5 @@
+from datetime import datetime
+
 TABLES_SCHEMA = {
     'comp_projects': ['proj_id', 'proj_status', 'proj_type', 'proj_pop_date', 'proj_description', 'proj_area',
                       'proj_loc_data_pg', 'proj_loc_data_google', 'proj_address', 'proj_rating', 'proj_url',
@@ -27,3 +29,25 @@ TABLES_SCHEMA = {
 }
 
 DEFAULT_CONNECTION_STRING = "postgres://postgres:postgres@localhost:5432/postgres"
+
+TABLES_SCHEMA_TYPES = {
+    'comp_projects': {'proj_id': int,
+                      'proj_status': str,
+                      'proj_type': str,
+                      'proj_pop_date': datetime,
+                      'proj_description': str,
+                      'proj_area': str,
+                      'proj_loc_data_pg': str,
+                      'proj_loc_data_google': str,
+                      'proj_address': str,
+                      'proj_rating': str,
+                      'proj_url': str,
+                      'proj_extension_fields': dict,
+                      'proj_add_date': datetime,
+                      'proj_update_date': datetime,
+                      'proj_entrepreneur_ids': str,
+                      'proj_contractor_ids': str,
+                      'proj_update_version': str,
+                      'proj_contact_details': str
+                      }
+}
