@@ -18,17 +18,10 @@ class PostgresConnector(object):
         return Table(self.table_name, metadata,
                      *[Column(column, String) for column in self.column_schema])
 
-    def __get_type(self, value: object):
-        print(value)
-        if value == "nan":
-            return None
-        return value
-
     def insert(self, data: list):
         with self.db.connect() as conn:
             self.table_metadata.create(checkfirst=True)
             for row in data:
-                row = {key: self.__get_type(value) for key, value in row.items()}
                 statement = self.table_metadata.insert().values(**row)
                 conn.execute(statement)
 
