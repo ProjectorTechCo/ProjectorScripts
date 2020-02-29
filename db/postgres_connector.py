@@ -1,8 +1,10 @@
+from typing import List
+
 from sqlalchemy import create_engine, Table, MetaData, Column, String
 
 
 class PostgresConnector(object):
-    def __init__(self, connection_string: str, table_name: str, column_schema: list):
+    def __init__(self, connection_string: str, table_name: str = None, column_schema: List[str] = None):
         self.connection_string = connection_string
         self.table_name = table_name
         self.column_schema = column_schema
@@ -10,6 +12,8 @@ class PostgresConnector(object):
         self.table_metadata = self.__get_metadata()
 
     def __get_metadata(self):
+        if not self.table_name:
+            return None
         metadata = MetaData(self.db)
         return Table(self.table_name, metadata,
                      *[Column(column, String) for column in self.column_schema])
@@ -32,7 +36,7 @@ class PostgresConnector(object):
         self.table_metadata.drop(checkfirst=True)
 
     def create(self, query=None):
-        if query:
+        if query is not None:
             self.__action(query)
         else:
             self.table_metadata.create(checkfirst=True)

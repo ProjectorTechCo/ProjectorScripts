@@ -3,7 +3,9 @@ import os
 
 import pandas as pd
 
-from config.common import TABLES_SCHEMA
+from config.common import TABLES_SCHEMA, DEFAULT_CONNECTION_STRING
+from config.queries import CREATE_QUERIES, DROP_QUERIES
+from db.postgres_connector import PostgresConnector
 from excel_etl.exceptions.io import *
 from excel_etl.executions.execute import Execute
 
@@ -25,7 +27,14 @@ def read_sheet(sheet_name, file_location=FILE_NAME):
         raise ExcelFileNotFound(file_location)
 
 
+def drop_and_create_tables():
+    pg = PostgresConnector(connection_string=DEFAULT_CONNECTION_STRING)
+    pg.create(DROP_QUERIES)
+    pg.create(CREATE_QUERIES)
+
+
 def main():
+    drop_and_create_tables()
     for sheet_name, table_schema in TABLES_SCHEMA.items():
         df = read_sheet(sheet_name)
         result = Execute(table_name=sheet_name, column_schema=table_schema).process(df)

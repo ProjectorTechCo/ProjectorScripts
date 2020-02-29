@@ -25,3 +25,5 @@ TABLES_SCHEMA = {
     'comp_videos': ['video_id', 'video_size', 'video_type', 'videos_source_id', 'videos_source_type', 'video_add_date',
                     'video_update_date', 'videos_file_url', 'video_extension_fields']
 }
+
+DEFAULT_CONNECTION_STRING = "postgres://postgres:postgres@localhost:5432/postgres"
