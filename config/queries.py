@@ -109,7 +109,7 @@ CREATE_QUERIES = """
             cont_update_date timestamptz
         );
         
-        CREATE TABLE IF NOT EXISTS comp_resources(
+        CREATE TABLE IF NOT EXISTS comp_resources (
             res_id int4 NOT NULL,
             res_class VARCHAR(10) NULL,
             res_file_url VARCHAR(255) NULL,

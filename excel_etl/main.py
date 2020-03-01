@@ -37,7 +37,7 @@ def main():
     drop_and_create_tables()
     for sheet_name, table_schema in TABLES_SCHEMA.items():
         df = read_sheet(sheet_name)
-        result = Execute(table_name=sheet_name, column_schema=table_schema).process(df)
+        result = Execute(table_name=sheet_name, column_schema=table_schema.keys()).process(df)
         print(result)
 
 
