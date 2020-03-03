@@ -2,19 +2,21 @@ from typing import List
 
 from pandas import DataFrame
 
-from config.common import DEFAULT_CONNECTION_STRING
+from config.common import DEFAULT_CONNECTION_STRING, TRANSFORMATIONS
 from db.postgres_connector import PostgresConnector
 
-
 class Execute(object):
-    def __init__(self, table_name: str, column_schema: List[str]):
+    def __init__(self, table_name: str, column_schema: dict):
         self.table_name = table_name
         self.column_schema = column_schema
         self.db_conn = PostgresConnector(DEFAULT_CONNECTION_STRING, table_name,
-                                         column_schema)
+                                         column_schema.keys())
 
     def process(self, df: DataFrame):
         self.validate(df)
+
+        # transform the data to output schema
+        result = TRANSFORMATIONS[self.table_name](self.table_name, self.column_schema).transform(df)
         # TODO: Add a validation for every type of data(timestamp, string, integer)
         # TODO: add convertor to handle null values in columns
         #  (we don't want add_date to be null, it's just like insertion_time)
@@ -22,7 +24,7 @@ class Execute(object):
         return self.column_schema
 
     def validate(self, df: DataFrame):
-        difference_columns = set(self.column_schema).symmetric_difference(set(df.columns.values))
+        difference_columns = set(self.column_schema.keys()).symmetric_difference(set(df.columns.values))
         if difference_columns:
             raise NotValidDataframe(
                 "The schema is invalid, missing/redundant columns {columns}".format(columns=difference_columns))

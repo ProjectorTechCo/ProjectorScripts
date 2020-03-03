@@ -1,7 +1,7 @@
-from config.common import TABLES_SCHEMA
+from config.common import TABLES_SCHEMA_TYPES
 
 DROP_QUERIES = "\n".join(
-    list(reversed(["DROP TABLE IF EXISTS {table_name};".format(table_name=table_name) for table_name in TABLES_SCHEMA.keys()])))
+    list(reversed(["DROP TABLE IF EXISTS {table_name};".format(table_name=table_name) for table_name in TABLES_SCHEMA_TYPES.keys()])))
 CREATE_QUERIES = """
         CREATE TABLE IF NOT EXISTS comp_projects (
             proj_id int4 NOT NULL,

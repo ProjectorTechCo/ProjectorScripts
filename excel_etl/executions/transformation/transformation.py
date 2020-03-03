@@ -1,9 +1,7 @@
-from abc import ABC, abstractmethod
 import locale
-from dateutil import parser
 from datetime import datetime
 
-from config.common import TABLES_SCHEMA_TYPES
+from dateutil import parser
 
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
@@ -26,21 +24,26 @@ class Transformation(object):
         self.sheet_name = sheet_name
         self.column_schema = column_schema
 
-    def transform(self, df_dict):
-        return [{key: self.handle_type(key, TABLES_SCHEMA_TYPES.get(self.sheet_name).get(key), value) for key, value in
-                 df_dict.items()}]
+    def transform(self, df):
+        df_dict = df.to_dict('records')
+        return [{self.sheet_name: self.change_df(df_dict)}]
+
+    def change_df(self, df_dict):
+        return [{key: self.handle_type(key, self.column_schema.get(key), value) for key, value in
+                 df_dict_item.items()} for df_dict_item in df_dict]
 
     def handle_type(self, column_name, column_type, column_value):
-        if type(column_type) == str:
-            return column_type
-        elif type(column_type) == int:
-            return locale.atoi(column_value)
-        elif type(column_type) == dict:
+        if column_type == str:
+            return column_value
+        elif column_type == int:
+            return locale.atoi(str(column_value))
+        elif column_type == dict:
             return parse_json_type(column_value)
-        elif type(column_type) == bool:
+        elif column_type == bool:
             return parse_bool_type(column_value)
-        elif type(column_type) == datetime:
-            return parser.parse(column_value)
+        elif column_type == datetime:
+            return column_value
+            # return parser.parse(column_value)
         else:
             raise TypeNotFoundException(
                 "The type {} for column {} with value {} in table {} was not found.".format(column_type, column_name,

@@ -4,7 +4,7 @@ from sqlalchemy import create_engine, Table, MetaData, Column, String
 
 
 class PostgresConnector(object):
-    def __init__(self, connection_string: str, table_name: str = None, column_schema: List[str] = None):
+    def __init__(self, connection_string: str, table_name: str = None, column_schema: dict = None):
         self.connection_string = connection_string
         self.table_name = table_name
         self.column_schema = column_schema

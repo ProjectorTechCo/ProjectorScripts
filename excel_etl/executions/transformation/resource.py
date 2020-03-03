@@ -6,8 +6,8 @@ class ResourceTransformation(Transformation):
         super().__init__(sheet_name, column_schema)
         self.schema_prefix = schema_prefix
 
-    def transform(self, df):
-        transformation = self.transform(df)
+    def transform(self, df_dict):
+        transformation = self.transform(df_dict)
         # TODO: Add the specific transformation for every resource.
 
     def get_new_schema(self, transformed_data):

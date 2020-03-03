@@ -1,6 +1,19 @@
 from datetime import datetime
 
+from excel_etl.executions.project import ProjectTransformation
+
 DEFAULT_CONNECTION_STRING = "postgres://postgres:postgres@localhost:5432/postgres"
+
+PROJECTS = "comp_projects"
+BUILDINGS = "comp_buildings"
+APPS = "comp_apps"
+USERS = "comp_users"
+ENTREPRENEURS = "comp_entrepreneurs"
+CONTRACTORS = "comp_contractors"
+
+TRANSFORMATIONS = {
+    PROJECTS: ProjectTransformation
+}
 
 TABLES_SCHEMA_TYPES = {
     'comp_projects': {'proj_id': int,
