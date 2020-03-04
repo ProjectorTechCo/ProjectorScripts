@@ -1,8 +1,6 @@
-import locale
 import json
+import locale
 from datetime import datetime
-
-from dateutil import parser
 
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 

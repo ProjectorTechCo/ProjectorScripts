@@ -18,8 +18,6 @@ CREATE_QUERIES = """
             proj_extension_fields json NULL,
             proj_add_date timestamptz NULL DEFAULT CURRENT_TIMESTAMP,
             proj_update_date timestamptz NULL,
-            proj_entrepreneur_ids VARCHAR(100) NULL,
-            proj_contractor_ids VARCHAR(100) NULL,
             proj_update_version int4 NULL,
             proj_contact_details json NULL,
             CONSTRAINT comp_projects_pk PRIMARY KEY (proj_id)
