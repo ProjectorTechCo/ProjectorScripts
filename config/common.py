@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from excel_etl.executions.project import ProjectTransformation
+from excel_etl.executions.transformation.project import ProjectTransformation
 
 DEFAULT_CONNECTION_STRING = "postgres://postgres:postgres@localhost:5432/postgres"
 
@@ -13,6 +13,9 @@ CONTRACTORS = "comp_contractors"
 
 TRANSFORMATIONS = {
     PROJECTS: ProjectTransformation
+}
+PROCESS_TABLES_SCHEMA = {
+    "comp_proj_workers_relations": ["type", "proj_id", "worker_id"]
 }
 
 TABLES_SCHEMA_TYPES = {
@@ -33,7 +36,7 @@ TABLES_SCHEMA_TYPES = {
                       'proj_entrepreneur_ids': str,
                       'proj_contractor_ids': str,
                       'proj_update_version': str,
-                      'proj_contact_details': str},
+                      'proj_contact_details': dict},
     'comp_buildings': {'build_id': int,
                        'build_number': str,
                        'build_proj_id': int,

@@ -1,4 +1,5 @@
 import locale
+import json
 from datetime import datetime
 
 from dateutil import parser
@@ -8,7 +9,8 @@ locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 def parse_json_type(value):
     # TODO: Add the json parsing part
-    return value
+    return json.dumps({} if not value else {item.split(":")[0]: item.split(":")[1].strip() for item in
+            list(filter(lambda field: ':' in field, [v for v in value.split("\n")]))})
 
 
 def parse_bool_type(value):

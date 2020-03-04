@@ -4,10 +4,10 @@ from sqlalchemy import create_engine, Table, MetaData, Column, String
 
 
 class PostgresConnector(object):
-    def __init__(self, connection_string: str, table_name: str = None, column_schema: dict = None):
+    def __init__(self, connection_string: str, table_name: str = None, column_names: list = None):
         self.connection_string = connection_string
         self.table_name = table_name
-        self.column_schema = column_schema
+        self.column_names = column_names
         self.db = create_engine(self.connection_string)
         self.table_metadata = self.__get_metadata()
 
@@ -16,7 +16,7 @@ class PostgresConnector(object):
             return None
         metadata = MetaData(self.db)
         return Table(self.table_name, metadata,
-                     *[Column(column, String) for column in self.column_schema])
+                     *[Column(column, String) for column in self.column_names])
 
     def insert(self, data: list):
         with self.db.connect() as conn:

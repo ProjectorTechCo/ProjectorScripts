@@ -21,7 +21,7 @@ CREATE_QUERIES = """
             proj_entrepreneur_ids VARCHAR(100) NULL,
             proj_contractor_ids VARCHAR(100) NULL,
             proj_update_version int4 NULL,
-            proj_contact_details VARCHAR(200) NULL,
+            proj_contact_details json NULL,
             CONSTRAINT comp_projects_pk PRIMARY KEY (proj_id)
         ) WITH ( OIDS = FALSE );
         
@@ -61,7 +61,7 @@ CREATE_QUERIES = """
             app_rooms VARCHAR(10) NULL,
             app_pop_date timestamptz,
             app_update_date timestamptz,
-            app_parking VARCHAR(20) NOT NULL,
+            app_parking VARCHAR(20) NULL,
             app_directions VARCHAR(20) NULL,
             app_update_version int4 DEFAULT 0,
             CONSTRAINT comp_apps_pk PRIMARY KEY (app_id),
@@ -85,7 +85,7 @@ CREATE_QUERIES = """
         
         CREATE TABLE IF NOT EXISTS comp_entrepreneurs (
             ent_id int4 NOT NULL,
-            ent_description VARCHAR(255) NOT NULL,
+            ent_description VARCHAR(1024) NOT NULL,
             ent_ratings float4 DEFAULT 0,
             ent_name VARCHAR(50) NULL,
             ent_web_site VARCHAR(255) NULL,
@@ -99,8 +99,9 @@ CREATE_QUERIES = """
         
         CREATE TABLE IF NOT EXISTS comp_contractors (
             cont_id int4 NOT NULL,
+            cont_type VARCHAR(50) NULL,
             cont_name VARCHAR(50) NULL,
-            cont_website VARCHAR(255) NULL,
+            cont_web_site VARCHAR(255) NULL,
             cont_contact_details json NULL,
             cont_extension_fields json NULL,
             cont_ratings float4 DEFAULT 0,
