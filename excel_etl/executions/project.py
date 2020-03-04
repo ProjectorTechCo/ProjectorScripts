@@ -13,12 +13,11 @@ class ProjectTransformation(Transformation):
         Transformation.__init__(self, sheet_name, column_schema)
 
     def transform(self, df: DataFrame):
-        return list(itertools.chain(*[DataFrame(np.array([item.values() for item in data]), columns=data[0].keys())
-                                      for data in self.split_dataframes(df)]))
+        return self.split_dataframes(df)
 
     def split_dataframes(self, df: DataFrame):
-        return [Transformation.transform(self, df[list(set(df.columns.values.tolist()) - set(RELATION_DF_COLUMNS))]),
-                self.get_project_relation_table(df)]
+        return [Transformation.transform(self, df[list(set(df.columns.values.tolist()) - set(RELATION_DF_COLUMNS))])[0],
+                {"comp_proj_workers_relations": self.get_project_relation_table(df)}]
 
     def get_project_relation_table(self, df):
         prepared_data_for_explode = []
