@@ -16,6 +16,10 @@ class GooglePlaceException(Exception):
     pass
 
 
+def find_bulk_locations(locations):
+    return [find_location_from_text(location).to_dict() for location in locations]
+
+
 def find_location_from_text(location_text):
     params = {
         "input": location_text,

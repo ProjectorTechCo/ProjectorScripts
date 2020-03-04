@@ -1,5 +1,3 @@
-from typing import List
-
 from pandas import DataFrame
 
 from config.common import DEFAULT_CONNECTION_STRING, TRANSFORMATIONS, PROCESS_TABLES_SCHEMA, TABLES_SCHEMA_TYPES

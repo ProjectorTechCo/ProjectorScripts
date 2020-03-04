@@ -11,7 +11,7 @@ CREATE_QUERIES = """
             proj_description VARCHAR(1024) NULL,
             proj_area VARCHAR(100) NULL,
             proj_loc_data_pg VARCHAR(100) NULL,
-            proj_loc_data_google VARCHAR(100) NULL,
+            proj_loc_data_google json NULL,
             proj_address VARCHAR(100) NULL,
             proj_rating VARCHAR(100) NULL,
             proj_url VARCHAR(200) NULL,

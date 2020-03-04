@@ -6,4 +6,4 @@ class GooglePlace(object):
         self.name = name
 
     def to_dict(self):
-        return self.__dict__.items()
+        return {key: value for key, value in self.__dict__.items()}
