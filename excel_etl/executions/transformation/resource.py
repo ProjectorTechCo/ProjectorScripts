@@ -21,6 +21,5 @@ class ResourceTransformation(Transformation):
     def get_new_schema(self, transformed_data):
         # TODO: Use the prefix to determine what object it is.
         return {
-            "res_id": transformed_data.get(''),
-            "res"
+            "res_id": transformed_data.get('')
         }
