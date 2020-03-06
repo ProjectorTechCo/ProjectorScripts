@@ -4,13 +4,23 @@ from datetime import datetime
 
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
+hebrew_to_english_keys = {
+    "אימייל": "email",
+    "דוא\"ל": "email"
+}
+
+
+def get_right_translation(item):
+    return hebrew_to_english_keys.get(item) or item
+
 
 def parse_json_type(value):
     # TODO: Add the json parsing part
     if type(value) == dict:
         return json.dumps(value)
-    return json.dumps({} if not value else {item.split(":")[0]: item.split(":")[1].strip() for item in
-            list(filter(lambda field: ':' in field, [v for v in value.split("\n")]))})
+    return json.dumps(
+        {} if not value else {get_right_translation(item.split(":")[0]): item.split(":")[1].strip() for item in
+                              list(filter(lambda field: ':' in field, [v for v in value.split("\n")]))})
 
 
 def parse_bool_type(value):
