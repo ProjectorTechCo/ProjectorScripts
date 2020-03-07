@@ -113,15 +113,10 @@ CREATE_QUERIES = """
         
         CREATE TABLE IF NOT EXISTS comp_resources (
             res_id int4 NOT NULL,
-            res_class VARCHAR(10) NULL,
-            res_file_url VARCHAR(255) NULL,
-            res_object_type VARCHAR(10) NULL,
             res_type VARCHAR(50) NULL,
-            res_dimensions VARCHAR(255) NULL,
             res_extension_fields json NULL,
             res_source_id VARCHAR(50) NULL,
             res_source_type VARCHAR(50) NULL,
-            res_validate_date timestamptz,
             res_add_date timestamptz DEFAULT CURRENT_TIMESTAMP,
             res_update_date timestamptz,
             CONSTRAINT comp_resources_pk PRIMARY KEY (res_id)

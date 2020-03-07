@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from excel_etl.executions.transformation.project import ProjectTransformation
+from excel_etl.executions.transformation.resource import ResourceTransformation
 
 DEFAULT_CONNECTION_STRING = "postgres://postgres:postgres@localhost:5432/postgres"
 
@@ -10,9 +11,12 @@ APPS = "comp_apps"
 USERS = "comp_users"
 ENTREPRENEURS = "comp_entrepreneurs"
 CONTRACTORS = "comp_contractors"
+IMAGES_2D = "comp_2d_imgs"
 
 TRANSFORMATIONS = {
-    PROJECTS: ProjectTransformation
+    PROJECTS: ProjectTransformation,
+    IMAGES_2D: ResourceTransformation
+
 }
 PROCESS_TABLES_SCHEMA = {
     "comp_proj_workers_relations": ["type", "proj_id", "worker_id"]

@@ -10,7 +10,7 @@ MAPS_API = "https://maps.googleapis.com/maps/api/{api_type}/{api_function}/json?
 
 
 def generate_api_url(api_type, api_function, params):
-    return MAPS_API.format(api_type=api_type, api_function=api_function, params=urlencode(params))
+    return MAPS_API.format(api_type=api_type, api_function=api_function, params=urlencode(params), timeout=10)
 
 
 class GooglePlaceException(Exception):
@@ -24,7 +24,7 @@ def find_location_from_text(location_text):
         "fields": "formatted_address,name,geometry"
     }
     res = requests.get(
-        generate_api_url(api_type="place", api_function="findplacefromtext", params=params))
+        generate_api_url(api_type="place", api_function="findplacefromtext", params=params), timeout=10)
     content = res.json()
     if res.status_code != 200 or content.get('status') != 'OK':
         raise GooglePlaceException(content)
