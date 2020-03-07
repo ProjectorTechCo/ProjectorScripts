@@ -27,6 +27,7 @@ TABLES_SCHEMA_TYPES = {
                       'proj_area': str,
                       'proj_loc_data_pg': str,
                       'proj_loc_data_google': dict,
+                      'proj_loc_close_places_google': dict,
                       'proj_address': str,
                       'proj_rating': str,
                       'proj_url': str,

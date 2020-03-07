@@ -2,6 +2,7 @@ import requests
 import os
 from urllib.parse import urlencode
 
+from excel_etl.models.google_nearby_place import GoogleNearbyPlace
 from excel_etl.models.google_place import GooglePlace
 
 API_KEY = os.environ.get('GOOGLE_API_KEY') or ''
@@ -14,10 +15,6 @@ def generate_api_url(api_type, api_function, params):
 
 class GooglePlaceException(Exception):
     pass
-
-
-def find_bulk_locations(locations):
-    return [find_location_from_text(location).to_dict() for location in locations]
 
 
 def find_location_from_text(location_text):
@@ -35,5 +32,21 @@ def find_location_from_text(location_text):
     # TODO: there can be many location in the 'candidates' field, find a way to handle it.
     address_info = content.get('candidates')[0]
     location = address_info.get('geometry').get('location')
-    return GooglePlace(address=address_info.get('formatted_address'), longitude=location.get('lng'),
-                       latitude=location.get('lat'), name=address_info.get('name'))
+    return GooglePlace(address=address_info.get('formatted_address'), geolocation=location,
+                       name=address_info.get('name')).to_dict()
+
+
+def find_close_places(latitude, longitude, radius):
+    params = {
+        "location": f"{latitude},{longitude}",
+        "radius": radius
+    }
+
+    res = requests.get(generate_api_url(api_type='place', api_function='nearbysearch', params=params))
+    content = res.json()
+    if res.status_code != 200 or content.get('status') != 'OK':
+        raise GooglePlaceException(content)
+
+    return [GoogleNearbyPlace(geo_location=place.get('geometry').get('location'), place_id=place.get('place_id'),
+                              types=place.get('types'), name=place.get('name')).to_dict() for place in
+            content.get('results')]

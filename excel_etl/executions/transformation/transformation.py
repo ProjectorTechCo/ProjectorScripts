@@ -20,7 +20,7 @@ def get_right_translation(item):
 
 def parse_json_type(value):
     # TODO: Add the json parsing part
-    if type(value) == dict:
+    if type(value) == dict or type(value) == list:
         return json.dumps(value)
     return json.dumps(
         {} if not value else {get_right_translation(item.split(":")[0]): item.split(":")[1].strip() for item in

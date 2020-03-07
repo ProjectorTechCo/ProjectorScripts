@@ -3,7 +3,7 @@ import itertools
 from pandas import DataFrame
 
 from excel_etl.executions.transformation.transformation import Transformation
-from excel_etl.external_api.google_api import find_bulk_locations
+from excel_etl.external_api.google_api import find_location_from_text, find_close_places
 
 RELATION_DF_COLUMNS = {"proj_entrepreneur_ids": "ent", "proj_contractor_ids": "cont"}
 
@@ -21,7 +21,11 @@ class ProjectTransformation(Transformation):
                 {"comp_proj_workers_relations": self.get_project_relation_table(df)}]
 
     def enrich_with_google_coordinates(self, df: DataFrame):
-        df["proj_loc_data_google"] = find_bulk_locations(df["proj_address"])
+        locations = [find_location_from_text(loc) for loc in df["proj_address"]]
+        df["proj_loc_data_google"] = [find_location_from_text(loc) for loc in df["proj_address"]]
+        df["proj_loc_close_places_google"] = [
+            find_close_places(loc.get('geolocation').get('latitude'),
+                                loc.get('geolocation').get('longitude'), 1500) for loc in df["proj_loc_data_google"]]
         return df
 
     def get_project_relation_table(self, df):
