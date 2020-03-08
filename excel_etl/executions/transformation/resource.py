@@ -62,5 +62,5 @@ class ResourceTransformation(Transformation):
             else:
                 df[output_column] = df[input_column]
         # TODO: create an array for the RESOURCE_ID column to have a unique id
-        # df[RESOURCE_ID] = f"{df[RESOURCE_ID]}_{df[RESOURCE_SOURCE_TYPE]}"
+        df[RESOURCE_ID] = [f"{item[RESOURCE_ID]}_{item[RESOURCE_SOURCE_TYPE]}" for item in df.to_dict('records')]
         return df[TABLES_COLUMNS.get(self.sheet_name)]
